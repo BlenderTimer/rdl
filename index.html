@@ -49,6 +49,11 @@ body {
 	box-shadow: none;
 }
 
+::selection {
+    background: #EEEEEE;
+    color: #404040;
+}
+
 #nav-home {
 	background: #1E1E1E;
 	width: 150px;
@@ -143,16 +148,9 @@ body {
 
 	resID.addEventListener("keypress", keyPress);
 
-    function UrlExists(url) {
-        var http = new XMLHttpRequest();
-        http.open('HEAD', url, false);
-        http.send();
-        return http.status!=404;
-    }
-
 	function init() {
-		if ((window.location.toString().search("id") - 1) > -1) {
-			resID.value = window.location.toString().substring(window.location.toString().indexOf("?id") + 4,window.location.toString().length);
+		if (window.location.toString().indexOf("?") > -1) {
+			resID.value = window.location.toString().substring(window.location.toString().indexOf("?") + 1,window.location.toString().length);
 		}
 		else {
 			resID.value = "";
