@@ -1,3 +1,4 @@
 User-agent: *
 Disallow: /resources/
+Disallow: /static-0/
 Allow: /
