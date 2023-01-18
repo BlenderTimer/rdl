@@ -208,7 +208,7 @@ body {
 	function checkStatus() {
         $.ajax({
             type: 'HEAD',
-            url: resID.value,
+            url: "https://rdl.blendertimer.com/resources/" + resID.value,
             success: function() {
                 resID.style.color = "#30BB30";
             },
