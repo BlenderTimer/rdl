@@ -216,9 +216,11 @@ body {
                 resID.style.color = "#FF4030";
             }
     	});
-        var http = new XMLHttpRequest();
-        http.open('HEAD', "./resources/" resID.value, false);
-        http.send();
-        console.log("FILEEXISTSTATUS: " + http.status);
+        $.get("./resources/" + resID.value)
+        .done(function() { 
+            console.log("FILEEXISTSTATUS: " + TRUE);
+        }).fail(function() { 
+            console.log("FILEEXISTSTATUS: " + FALSE);
+        })
     }
 </script>
