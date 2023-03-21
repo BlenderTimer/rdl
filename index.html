@@ -33,6 +33,7 @@
 			<input type="text" placeholder="Resource ID" id="res-id" oninput="checkStatus()">
 			<p id="res-av">Resource not found!</p>
 			<a id="download" onclick="downloadResource()" download="">Download</a>
+            <a id="view" onclick="viewResource()">View</a>
 		</div>
 	</body>
 </html>
@@ -133,6 +134,31 @@ body {
 	box-shadow: 0px 0px 20px rgba(0,0,0,0.8);
 }
 
+#view {
+    display: block;
+    outline: none;
+    background: #3A3A3A;
+    border: none;
+    float: center;
+    margin: 0px auto 5px auto;
+    border-radius: 5px;
+    cursor: pointer;
+    width: auto;
+    max-width: 200px;
+    font-size: 15pt;
+    padding: 10px;
+    color: #F5F5F5;
+    box-shadow: 0px 0px 15px rgba(0,0,0,0.5);
+    transition: 0.3s;
+    text-decoration: none;
+    text-align: center;
+}
+
+#view:hover {
+    background: #303030;
+    box-shadow: 0px 0px 20px rgba(0,0,0,0.8);
+}
+
 #download-form input[type=text] {
 	display: block;
 	outline: none;
@@ -159,13 +185,25 @@ body {
 	var resID = document.getElementById('res-id');
 	var dl = document.getElementById('download');
 	var resAV = document.getElementById('res-av');
+    var view = document.getElementById('view');
 
 	resID.addEventListener("keypress", keyPress);
 
 	function init(reset) {
 		if (reset == true) {
 			if (window.location.toString().indexOf("?") > -1) {
-				resID.value = window.location.toString().substring(window.location.toString().indexOf("?") + 1,window.location.toString().length);
+                if (window.location.toString().indexOf("&") > -1) {
+                    resID.value = window.location.toString().substring(window.location.toString().indexOf("?") + 1,window.location.toString().indexOf("&"));
+                    if (window.location.toString().substring(window.location.toString().indexOf("&") + 1,window.location.toString().length) == "view") {
+                        view.click();
+                    }
+                    if (window.location.toString().substring(window.location.toString().indexOf("&") + 1,window.location.toString().length) == "download") {
+                        dl.click();
+                    }
+                }
+                else {
+                    resID.value = window.location.toString().substring(window.location.toString().indexOf("?") + 1,window.location.toString().length);
+                }
 			}
 			else {
 				resID.value = "";
@@ -208,6 +246,10 @@ body {
         dl.download = resID.value;
         dl.href= "./resources/" + resID.value;
 	}
+
+    function viewResource() {
+        view.href= "./resources/" + resID.value;
+    }
 
 	function keyPress(event) {
 		if (event.code == "Enter") {
